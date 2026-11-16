@@ -71,7 +71,7 @@ pub fn share_params(app: &PhotocraftApp) -> Value {
 
 /// Work's mascot texture, decoded once per context.
 fn mascot(ctx: &egui::Context) -> Option<egui::TextureHandle> {
-    let key = egui::Id::new("zenda.theo.texture");
+    let key = egui::Id::unique("zenda.theo.texture");
     if let Some(texture) = ctx.data(|d| d.get_temp::<egui::TextureHandle>(key)) {
         return Some(texture);
     }
@@ -264,10 +264,11 @@ mod tests {
     #[test]
     fn zenda_title_bar_theo_reaches_work() {
         use egui_kittest::kittest::Queryable;
-        let mut h = egui_kittest::Harness::builder().with_size(egui::vec2(1440.0, 900.0)).build_ui_state(
-            |ui, app: &mut PhotocraftApp| crate::panels::title_bar(app, ui),
-            app(),
-        );
+        // The whole app, so the button is drawn in the real title bar with PhotoCraft's fonts.
+        let mut h = egui_kittest::Harness::builder().with_size(egui::vec2(1440.0, 900.0)).with_max_steps(64).build_eframe(|cc| {
+            PhotocraftApp::setup_context(&cc.egui_ctx, Default::default());
+            app()
+        });
         h.run_steps(4);
         if !ON {
             assert!(h.query_by_label("Ask Theo for help").is_none());
