@@ -160,7 +160,13 @@ fn render_start_rail(app: &mut PhotocraftApp, ui: &mut egui::Ui, rail_w: f32) {
         learn_color,
     );
     if learn_resp.clicked() {
-        crate::links::open(app, ui.ctx(), crate::links::TUTORIALS);
+        if crate::zenda::ON {
+            // Zenda's build: Learn asks Work's Theo instead of opening ArtCraft's tutorials.
+            let context = crate::zenda::theo_context(app, "learn");
+            app.zenda.push("work.theo", context);
+        } else {
+            crate::links::open(app, ui.ctx(), crate::links::TUTORIALS);
+        }
     }
 
     // 5. Bottom pinned community links
@@ -174,9 +180,14 @@ fn render_start_rail(app: &mut PhotocraftApp, ui: &mut egui::Ui, rail_w: f32) {
 
     ui.add_space(8.0);
 
-    render_rail_link(app, ui, rail_w, tl!("Website"), "link", crate::links::APP_PAGE);
-    render_rail_link(app, ui, rail_w, tl!("Discord"), "message-square", crate::links::DISCORD);
-    render_rail_link(app, ui, rail_w, tl!("GitHub"), "link-2", crate::links::GITHUB);
+    if crate::zenda::ON {
+        // Zenda's build: no ArtCraft community links; the source link is the fork's.
+        render_rail_link(app, ui, rail_w, tl!("GitHub"), "link-2", crate::zenda::FORK);
+    } else {
+        render_rail_link(app, ui, rail_w, tl!("Website"), "link", crate::links::APP_PAGE);
+        render_rail_link(app, ui, rail_w, tl!("Discord"), "message-square", crate::links::DISCORD);
+        render_rail_link(app, ui, rail_w, tl!("GitHub"), "link-2", crate::links::GITHUB);
+    }
 }
 
 fn render_rail_link(app: &mut PhotocraftApp, ui: &mut egui::Ui, rail_w: f32, label: &str, icon_name: &str, url: &str) {

@@ -154,3 +154,10 @@ longer used or shipped.
 | `hayro-interpret 0.7.0 / assets/Foxit*.pfb` (13 standard-14 font files) | Foxit Software Inc. / PDFium Authors | <https://github.com/storytold/craft-libs/tree/c5a1cbfb5f9049f9270955caffb5bee5997aebf7/vendor/hayro-interpret/assets> | BSD-3-Clause | Renders non-embedded standard-14 PDF fonts |
 | `hayro-interpret 0.7.0 / assets/CGATS001Compat-v2-micro.icc` | Clinton Ingram (saucecontrol/Compact-ICC-Profiles) | <https://github.com/storytold/craft-libs/tree/c5a1cbfb5f9049f9270955caffb5bee5997aebf7/vendor/hayro-interpret/assets> | CC0-1.0 | Default CMYK colour conversion |
 | `hayro-cmap 0.1.0 / assets/cmaps.brotli` | Adobe | <https://github.com/storytold/craft-libs/tree/c5a1cbfb5f9049f9270955caffb5bee5997aebf7/vendor/hayro-cmap/assets> | BSD-3-Clause | Character-code mapping for CJK PDFs |
+
+## Zenda build
+
+| File | Author | Description | License | Use |
+|---|---|---|---|---|
+| `assets/zenda/theo-icon-64.png` | Zenda Solutions | Work mascot, supplied by Zenda for its fork | Zenda Solutions, permission to redistribute with this build | Theo button of the Zenda build |
+| `zenda/i18n/*/photocraft.tsv` | Zenda Solutions with Claude Code (AI-assisted) | Spanish and Portuguese (Brazil) interface rows written from the English strings | MIT OR Apache-2.0 (`LICENSE-MIT`, `LICENSE-APACHE`) | Appended to craft-i18n for the Zenda build |

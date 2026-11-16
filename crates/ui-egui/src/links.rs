@@ -18,7 +18,7 @@ pub const COMMANDS: &[(&str, &str)] =
     &[("help.discord", DISCORD), ("help.website", APP_PAGE), ("help.artcraftWebsite", ARTCRAFT_WEBSITE), ("help.github", GITHUB), ("help.reportIssue", ISSUES)];
 
 pub fn url_for(id: &str) -> Option<&'static str> {
-    COMMANDS.iter().find(|c| c.0 == id).map(|c| c.1)
+    COMMANDS.iter().find(|c| c.0 == id).and_then(|c| crate::zenda::link(id, c.1))
 }
 
 /// Open `url` in the system browser (a new tab on the web) and note it in the status bar. Prefers

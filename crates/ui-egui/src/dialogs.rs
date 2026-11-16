@@ -843,11 +843,22 @@ fn about_tab_body(app: &mut PhotocraftApp, ui: &mut egui::Ui, tab: &str) {
             ui.label(tl!("PhotoCraft — an open-source, native image editor written in Rust."));
             ui.label(crate::i18n::fmt(tl!("Version {version}"), &[("version", &photocraft_engine::build_info::long_version())]));
             ui.add_space(12.0);
-            ui.vertical_centered(|ui| {
-                crate::links::discord_button(app, ui, 220.0);
-                ui.add_space(8.0);
-                crate::links::link_row(app, ui);
-            });
+            if crate::zenda::ON {
+                // Zenda's build: no ArtCraft marks or community links (docs/brand/LICENSE-brand.txt).
+                ui.vertical_centered(|ui| {
+                    ui.label(tl!("Zenda's build for Work."));
+                    ui.label(tl!("Based on PhotoCraft, by the ArtCraft team."));
+                    if ui.link(tl!("Source and modifications")).on_hover_text(crate::zenda::FORK).clicked() {
+                        crate::links::open(app, ui.ctx(), crate::zenda::FORK);
+                    }
+                });
+            } else {
+                ui.vertical_centered(|ui| {
+                    crate::links::discord_button(app, ui, 220.0);
+                    ui.add_space(8.0);
+                    crate::links::link_row(app, ui);
+                });
+            }
             ui.add_space(10.0);
             ui.weak("egui · wgpu · photocraft-engine");
         }
