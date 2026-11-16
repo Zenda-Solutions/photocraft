@@ -88,6 +88,10 @@ pub fn title_bar(app: &mut PhotocraftApp, ui: &mut egui::Ui) {
                 let controls_end = {
                     let ui = &mut group_ui;
                     ui.spacing_mut().item_spacing.x = 6.0;
+                    if crate::zenda::ON {
+                        // Work's Theo button keeps the far end; the workspace controls fit in what is left.
+                        crate::zenda::title_bar_theo(app, ui);
+                    }
                     let mut ws = app.ui.workspace.clone();
                     let options = crate::workspace_ui::switcher_options(app);
                     let opts: Vec<(String, &str)> = options.iter().map(|(k, l)| (k.clone(), l.as_str())).collect();

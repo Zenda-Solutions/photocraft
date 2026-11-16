@@ -74,6 +74,9 @@ pub fn invoke(app: &mut PhotocraftApp, ctx: &egui::Context, id: &str, params: Va
     if !keeps_box_drag(id) {
         crate::type_box_preview::end_drag(app);
     }
+    if let Some(result) = crate::zenda::intercept(app, id) {
+        return Ok(result);
+    }
     if crate::discard_ui::intercept(app, id, &params) {
         return Ok(Value::Null);
     }

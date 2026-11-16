@@ -7,6 +7,11 @@ license.workspace = true
 [lints]
 workspace = true
 
+[features]
+default = []
+# Zenda's build for Work (src/zenda.rs).
+zenda = []
+
 [dependencies]
 chrono = { workspace = true }
 craft-print = { workspace = true }

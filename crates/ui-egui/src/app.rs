@@ -36,11 +36,14 @@ impl PhotocraftApp {
     /// Creates a new application state managing the engine session and UI services; the session
     /// keeps the services' automation policy as the gate actions automation wrote play under.
     pub fn new(mut session: Session, mut services: Services) -> Self {
-        session.updates.check = services.check_updates.take();
+        // Zenda's build is updated by Work, never by upstream's update service.
+        let check = services.check_updates.take();
+        session.updates.check = if crate::zenda::ON { None } else { check };
         // Actions automation wrote keep this gate when the user plays them. Batch and droplets
         // copy steps instead of the action, so they do not keep the gate yet.
         session.automation_gate = session.automation_gate.or(services.automation_authorize);
         let mut app = Self {
+            zenda: crate::zenda::Outbox::default(),
             session,
             ui: UiState::default(),
             services,

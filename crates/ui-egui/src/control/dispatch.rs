@@ -189,6 +189,7 @@ fn shell_methods(app: &mut PhotocraftApp, ctx: &egui::Context, req: &ControlRequ
             ok(Value::Null)
         }
         "ui.screenshot" => screenshot(app, ctx, p),
+        "work.events" if crate::zenda::ON => ok(json!({"events": app.zenda.drain()})),
         _ => return None,
     })
 }
