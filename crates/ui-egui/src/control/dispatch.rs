@@ -190,6 +190,16 @@ fn shell_methods(app: &mut PhotocraftApp, ctx: &egui::Context, req: &ControlRequ
         }
         "ui.screenshot" => screenshot(app, ctx, p),
         "work.events" if crate::zenda::ON => ok(json!({"events": app.zenda.drain()})),
+        // Zenda's build: Work hands Theo's chat a short-lived key (zenda_chat.rs), only over this
+        // authenticated channel.
+        #[cfg(feature = "zenda")]
+        "zenda.chat.key" => match zenda_theo::key_params(&req.params) {
+            Ok((token, secs)) => {
+                crate::zenda_chat::offer_key(app, &token, secs);
+                ok(Value::Null)
+            }
+            Err(e) => err(e),
+        },
         _ => return None,
     })
 }
