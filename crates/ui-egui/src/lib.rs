@@ -56,10 +56,10 @@ pub mod render_path;
 pub mod screenshot;
 pub mod state;
 pub mod texel_guard;
+pub mod theme;
 pub mod zenda;
 #[cfg(feature = "zenda")]
 pub mod zenda_chat;
-pub mod theme;
 pub use titlebar::{Caption, CaptionFamily, CaptionIcon, CaptionIcons, CaptionStyle, MIN_WINDOW_SIZE, RenderIconFn};
 pub(crate) mod tool_memory;
 pub mod updates_ui;
