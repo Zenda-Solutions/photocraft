@@ -44,6 +44,8 @@ impl PhotocraftApp {
         session.automation_gate = session.automation_gate.or(services.automation_authorize);
         let mut app = Self {
             zenda: crate::zenda::Outbox::default(),
+            #[cfg(feature = "zenda")]
+            theo_chat: None,
             session,
             ui: UiState::default(),
             services,
@@ -261,6 +263,8 @@ impl eframe::App for PhotocraftApp {
 
     fn logic(&mut self, ctx: &egui::Context, frame: &mut eframe::Frame) {
         self.logic_frame(ctx, frame);
+        #[cfg(feature = "zenda")]
+        crate::zenda_chat::tick(self, ctx);
         self.finish_type_reset_logic(ctx);
     }
 
@@ -314,6 +318,9 @@ impl eframe::App for PhotocraftApp {
             self.ui.status = error;
             self.ui.status_error = true;
         }
+        // Theo's chat panel goes before the frame's central panel (zenda_chat.rs).
+        #[cfg(feature = "zenda")]
+        crate::zenda_chat::show(self, ui);
         self.ui_frame(ui, frame);
         self.finish_type_reset_pass(ui.ctx());
     }

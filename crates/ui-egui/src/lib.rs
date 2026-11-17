@@ -56,8 +56,10 @@ pub mod render_path;
 pub mod screenshot;
 pub mod state;
 pub mod texel_guard;
-pub mod zenda;
 pub mod theme;
+pub mod zenda;
+#[cfg(feature = "zenda")]
+pub mod zenda_chat;
 pub use titlebar::{Caption, CaptionFamily, CaptionIcon, CaptionIcons, CaptionStyle, MIN_WINDOW_SIZE, RenderIconFn};
 pub(crate) mod tool_memory;
 pub mod updates_ui;
@@ -353,6 +355,9 @@ type InfoSampleKey = (i32, i32, u64, u32, u32);
 pub struct PhotocraftApp {
     /// What the person asked of Work (Zenda build; see [`zenda`]).
     pub zenda: zenda::Outbox,
+    /// Theo's chat inside Foto: `None` until Work sends a chat key (its flag is on).
+    #[cfg(feature = "zenda")]
+    pub theo_chat: Option<zenda_theo::panel::Chat>,
     pub session: Session,
     pub ui: UiState,
     pub services: Services,

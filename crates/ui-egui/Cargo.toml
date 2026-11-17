@@ -10,9 +10,12 @@ workspace = true
 [features]
 default = []
 # Zenda's build for Work (src/zenda.rs).
-zenda = []
+# Theo's chat inside Foto when Work turns it on (src/zenda_chat.rs).
+zenda = ["dep:zenda-theo"]
 
 [dependencies]
+# Shared with the other Zenda forks; lives in the WordCraft fork for now (egui range 0.36–0.37).
+zenda-theo = { git = "https://github.com/Zenda-Solutions/wordcraft", rev = "8af4c86a406650504a3405729b0a8aa38e6ea661", optional = true, features = ["egui", "http"] }
 chrono = { workspace = true }
 craft-print = { workspace = true }
 craft-ui = { workspace = true }

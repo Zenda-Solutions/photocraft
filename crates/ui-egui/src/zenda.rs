@@ -101,6 +101,11 @@ pub fn theo_button(ui: &mut egui::Ui, label: &str, hint: &str) -> egui::Response
 /// The Theo button at the far end of the title bar; a press queues `work.theo`.
 pub fn title_bar_theo(app: &mut PhotocraftApp, ui: &mut egui::Ui) {
     if theo_button(ui, tl!("Ask Theo for help"), tl!("Ask Theo about what is on screen")).clicked() {
+        // With Work's chat flag on, the chat opens here instead (zenda_chat.rs).
+        #[cfg(feature = "zenda")]
+        if crate::zenda_chat::toggle(app) {
+            return;
+        }
         let context = theo_context(app, "button");
         app.zenda.push("work.theo", context);
     }
