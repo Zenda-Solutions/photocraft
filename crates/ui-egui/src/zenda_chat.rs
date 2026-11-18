@@ -51,6 +51,14 @@ pub struct FotoHost<'a> {
 }
 
 impl Host for FotoHost<'_> {
+    fn suggestions(&self) -> Vec<String> {
+        vec![
+            "Pasá esta foto a blanco y negro".into(),
+            "Poné un título arriba de la imagen".into(),
+            "¿Cómo recorto la imagen cuadrada para redes?".into(),
+        ]
+    }
+
     fn skill(&self) -> String {
         SKILL.to_string()
     }
